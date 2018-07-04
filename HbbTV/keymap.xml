@@ -3,4 +3,7 @@
 		<key id="KEY_HELP" mapto="help_b" flags="b" />
 		<key id="KEY_HELP" mapto="help_l" flags="l" />
 	</map>
+        <map context="InfobarRedButtonActions">
+                <key id="KEY_RED" mapto="activateRedButton" flags="b"/>
+        </map>
 </keymap>
