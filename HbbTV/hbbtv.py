@@ -1,8 +1,10 @@
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
-from enigma import eTimer
-
+from Screens.InfoBar import InfoBar
+from enigma import eTimer, eServiceReference
+from Screens.ChannelSelection import ChannelSelection
 import os, struct, vbcfg
+
 
 from vbipc import VBController
 
@@ -15,7 +17,9 @@ class HbbTVWindow(Screen):
 		from enigma import getDesktop
 		self.width = getDesktop(0).size().width()
 		self.height = getDesktop(0).size().height()
-		
+
+
+                
 		if (self.width > 1920):
 			self.width = 1920
 		elif (self.width < 720):
@@ -33,7 +37,10 @@ class HbbTVWindow(Screen):
 
 		self._url = url
 		self._info = app_info
-		
+
+#                # hbbtv debugging
+                self.servicelist = self.session.instantiateDialog(ChannelSelection)
+                
 		self.onLayoutFinish.append(self.start_hbbtv_application)
 
 		self._close_timer = eTimer()
@@ -110,10 +117,15 @@ class HbbTVWindow(Screen):
 		vbcfg.osd_unlock()
 		dsk.paint()
 
-		vbcfg.set_bgcolor("0")
+		#vbcfg.set_bgcolor("0")
 		vbcfg.DEBUG("Stop HbbTV")
 		
 		os.system("run.sh stop")
+
+		cur_channel = self.servicelist.getCurrentSelection()
+                cur_channel = cur_channel.toString()
+
+                self.session.nav.playService(eServiceReference(cur_channel))
 		
 		self.close()
 

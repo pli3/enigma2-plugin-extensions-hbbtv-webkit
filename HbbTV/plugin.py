@@ -57,6 +57,7 @@ _OPCODE_LIST = [
 		'CONTROL_RELOAD_KEYMAP',
 		'GET_TIME_OFFSET',
 		'CONTROL_CHANNEL_UP',
+        
 		'CONTROL_CHANNEL_DOWN',
 		'OPCODE_END'
 		]
@@ -97,9 +98,9 @@ class VBHandler(VBHandlers):
 					if x in self.onCloseCB:
 						self.onCloseCB.remove(x)
 		#print "============== self.videobackend_activate: ", self.videobackend_activate, "   =============="
-		#if self.videobackend_activate is False:
-		if self.videobackend_activate is True:
-			#self._session.nav.stopService()
+		if self.videobackend_activate is False:
+		#if self.videobackend_activate is True:
+			self._session.nav.stopService()
 			if vbcfg.g_service is not None:
 				self._session.nav.playService(vbcfg.g_service)
 		return (True, None)
